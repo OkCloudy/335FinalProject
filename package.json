@@ -1,0 +1,25 @@
+{
+  "name": "335finalproject",
+  "version": "1.0.0",
+  "description": "Final Project for 335",
+  "main": "code.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OkCloudy/335FinalProject.git"
+  },
+  "author": "Nathan Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OkCloudy/335FinalProject/issues"
+  },
+  "homepage": "https://github.com/OkCloudy/335FinalProject#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2"
+  }
+}
