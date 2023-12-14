@@ -1,6 +1,9 @@
 const addButton = document.getElementById("add-task");
 const taskContainer = document.getElementById("task-area");
 
+
+const url = `mongodb+srv://tgacquin:<password>@cluster0.4zzdwnk.mongodb.net/?retryWrites=true&w=majority`
+
 let taskId = 0; // Initialize a variable to keep track of task IDs
 
 addButton.addEventListener("click", addTask);
@@ -47,3 +50,22 @@ function addTask() {
     taskText.value = "";
     taskId++; // Increment the task ID for the next task
 }
+
+
+document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Login successful:', data))
+    .catch(error => console.error('Error:', error));
+});

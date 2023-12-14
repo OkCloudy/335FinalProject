@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
     <title>Main Page</title>
-    <link rel="stylesheet" href="styles.css"></style>
-    <script src="server.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="client.js" defer></script> <!-- Update the script source -->
 </head>
-
 <body>
     <h1>Login</h1>
-
-    <h4>Username</h4>
-    <input type="text" id="username" name="username">
-    <h4>Password</h4>
-    <input type="text" id="Password" name="Password"> <br> <br>
-    <input type="submit">
+    <form id="login-form">
+        <h4>Username</h4>
+        <input type="text" id="username" name="username">
+        <h4>Password</h4>
+        <input type="password" id="password" name="password"> <!-- Change type to password -->
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
