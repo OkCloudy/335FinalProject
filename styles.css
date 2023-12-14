@@ -1,0 +1,61 @@
+html {
+    box-sizing: border-box;
+}
+
+.task-area {
+    margin-top: 1rem;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    margin-top: .5rem;
+}
+
+.task label {
+    cursor: pointer;
+    display: flex;
+}
+
+.task label:before {
+    content: '';
+    width: 1em;
+    height: 1em;
+    border: .05em solid black;
+    border-radius: .15em;
+    margin-right: .5em;
+}
+
+.task label:hover::before,
+.task .check:hover + label::before {
+    background-color: orange;
+}
+
+.task .check:checked + label::before {
+    background-color: rgb(228, 151, 7);
+}
+
+.task label ion-icon {
+    visibility: hidden;
+}
+
+.task .check:checked + label ion-icon {
+    visibility: visible;
+}
+
+.check {
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+}
+
+.individual-task {
+    border-radius: 5%;
+    border: .1rem solid gray;
+    width: 25%;
+    height: 1.5rem;
+}
+
+#task-area {
+    margin-top: 1rem;
+}
