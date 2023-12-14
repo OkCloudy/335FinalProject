@@ -12,6 +12,12 @@ function addTask() {
     console.log("Adding new Task");
     const taskText = document.getElementById("enter-task");
 
+    if (taskText.value.trim() === "") {
+        console.log("Add sum");
+        alert("Type a task first");
+        return;
+    }
+
     let newTaskDiv = document.createElement('div');
     newTaskDiv.className = "task";
 
