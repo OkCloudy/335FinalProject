@@ -59,3 +59,8 @@ html {
 #task-area {
     margin-top: 1rem;
 }
+
+#enter-task {
+    width: 25%;
+    height: 1.5rem;
+}

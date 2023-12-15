@@ -2,6 +2,7 @@ const portNumber = 5001;
 const express = require('express');
 const { MongoClient } = require('mongodb');
 require("dotenv").config();
+const app = express();
 const path = require('path');
 const bodyParser = require("body-parser"); /* To handle post parameters */
 
@@ -17,7 +18,6 @@ app.set("view engine", "ejs");
 const publicPath = path.resolve(__dirname, "serverStaticFiles");
 app.use('/serverStaticFiles', express.static(publicPath));
 
-const app = express();
 app.use(express.json());
 
 app.get("/", (request, response) => {
