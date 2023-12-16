@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+</head>
+<body>
+    <h1>Sign Up</h1>
+    <div id="sign-up-container">
+        <form id="sign-up-form" action="http://localhost:<%= port %>/signUp" method="post">
+            <label for="signUpUsername">Username: </label>
+            <input type="text" name="signUpUsername" id="sign-up-username">
+
+            <label for="signUpPassword">Password: </label>
+            <input type="text" name="signUpPassword" id="sign-up-password">
+            
+            <label for="confirmPassword">Confirm password: </label>
+            <input type="text" name="confirmPassword" id="retype-password">
+            <input type="submit" name="sign-up" id="sign-up-button">
+        </form>
+    </div>
+
+    <% if (passwordConfirmed === false) { %>
+        <script>
+            window.onload = function() {
+                // Display an alert or custom notification
+                alert('Password not confirmed');
+                // You can replace the above alert with a custom notification implementation if preferred
+            };
+        </script>
+    <% } %>
+</body>
+</html>

@@ -14,11 +14,29 @@
 
     <div id="quote"></div>
 
-    <input type="text" placeholder="Enter New Task" name="enter-task" id="enter-task">
-    <input type="button" value="ADD" name="add-task" id="add-task">
-    <div id="task-area"></div>
+    <div id="login-container">
+        <h3>Login</h3>
+        <form id="login-form" action="http://localhost:<%= port %>/login" method="post">
+            <label for="username">Username: </label>
+            <input type="text" name="username">
+
+            <label for="password">Password: </label>
+            <input type="password" name="password">
+            
+            <input type="submit" value="Login">
+        </form>
+
+        <a href="/signUp">Sign Up</a>
+    </div>
+    <% if (userNotFound) { %>
+        <script>
+            window.onload = function() {
+                // Display an alert or custom notification
+                alert('User not found. Please try again.');
+                // You can replace the above alert with a custom notification implementation if preferred
+            };
+        </script>
+    <% } %>
     
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
