@@ -89,7 +89,6 @@ app.post("/login", async (request, response) => {
     .findOne(userInfo);
     if (result !== null) {
         response.render("todo");
-        request.session.username = result.username;
     } else {
         response.render("index", {port: portNumber, userNotFound: true });
     }
