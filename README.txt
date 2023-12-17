@@ -7,9 +7,4 @@ providing motivational/philosophical quotes
 
 APIs: https://zenquotes.io/
 
-Youtube Link:
-
-
-Incorrect log in
-Adding task, deleting, and marking
-and sign up passwords not matching
+Youtube Link: https://youtu.be/bQNogwb-r18
