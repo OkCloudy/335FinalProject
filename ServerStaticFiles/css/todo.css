@@ -8,7 +8,8 @@ box-sizing: border-box;
 .container {
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(135deg, #153677, #4e085f);
+    /* background: linear-gradient(135deg, #153677, #4e085f); */
+    background: linear-gradient(135deg, #f3f4f6, #d6e4f0);
     padding: 10px;
 }
 
