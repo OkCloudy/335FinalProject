@@ -8,6 +8,7 @@ let taskId = 0; // Initialize a variable to keep track of task IDs
 addButton.addEventListener("click", addTask);
 date.addEventListener('change', dateSelect);
 
+/* Functionality for fetching todo list based on date. never finished :( 
 async function dateSelect() {
     const dateValue = date.value;
     const response = await fetch("/todo", {
@@ -20,7 +21,7 @@ async function dateSelect() {
     const result = await response.json();
     console.log(result);
 }
-
+*/
 function renderTasks() {
     taskContainer.innerHTML = "";
     taskArray.forEach(element => {

@@ -2,7 +2,6 @@ const api_url ="https://zenquotes.io/api/random/";
 const quoteDiv = document.getElementById("quote");
 
 async function getQuote() {
-    console.log("yup");
     const response = await fetch("/get-quote");
     let data = await response.json();
     console.log(data[0]);

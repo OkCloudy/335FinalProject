@@ -14,14 +14,13 @@ const databaseAndCollection = {db: process.env.MONGO_DB_NAME, collection: proces
 const client = new MongoClient(uri); 
 connectToDB();
 
-const session = require('express-session');
-
+/* User session stuff that i did not get to
 app.use(session({
     // Session configuration
     secret: 'your_secret_key',
     resave: false,
     saveUninitialized: true,
-}));
+})); */
 
 /* Initializes request.body with post information */ 
 app.use(bodyParser.urlencoded({extended:false}));
@@ -34,6 +33,7 @@ app.set("view engine", "ejs");
 const publicPath = path.resolve(__dirname, "serverStaticFiles");
 app.use('/serverStaticFiles', express.static(publicPath));
 
+/* Can't remember what this does just stealing it from lecture */
 app.use(express.json());
 
 /* Server and Mongo Connection */
@@ -41,6 +41,7 @@ const server = app.listen(portNumber, () => {
     console.log(`Web server is running at http://localhost:${portNumber}`);
 }); 
 
+/* MongoDB Connection */
 async function connectToDB() {
     try {
         await client.connect();
@@ -50,14 +51,17 @@ async function connectToDB() {
     }
 }
 
+/* Endpoint for loading up home page */
 app.get("/", (request, response) => {
     response.render("index", {port: portNumber, userNotFound: false});
 });
 
+/* Endpoint for loading sign up page */
 app.get("/signUp", (request, response) => {
     response.render("signUp", {port: portNumber, passwordConfirmed: true});
 });
 
+/* Endpoint for post req of user signing up */
 app.post("/signUp", async (request, response) => {
     try {
         let {signUpUsername, signUpPassword, confirmPassword} = request.body;
@@ -75,16 +79,14 @@ app.post("/signUp", async (request, response) => {
     }
 });
 
+/* Endpoint for user logging in */
 app.post("/login", async (request, response) => {
     
-    console.log("poop");
     let {username, password} = request.body;
     let userInfo = {username, password};
     const result = await client.db(databaseAndCollection.db)
     .collection(databaseAndCollection.collection)
     .findOne(userInfo);
-    console.log(result);
-    console.log(databaseAndCollection.db);
     if (result !== null) {
         response.render("todo");
         request.session.username = result.username;
@@ -93,6 +95,7 @@ app.post("/login", async (request, response) => {
     }
 });
 
+/* Endpoint that gets random quotes from the API */
 app.get("/get-quote", async (request, response) => {
     try {
         const resp = await fetch("https://zenquotes.io/api/random/");
@@ -104,6 +107,7 @@ app.get("/get-quote", async (request, response) => {
     }
 });
 
+/* Endpoint for getting to do lists based on the date that i never finished 
 app.post("/todo", async (request, response) => {
     if (!request.session.username) {
         return response.status(401).send('User not logged in');
@@ -122,7 +126,7 @@ app.post("/todo", async (request, response) => {
     } else {
         response.send({ todoList: [] });
     }
-});
+});*/
 
 /* Functionality to delete from DB that i never got to :( 
 app.delete('/delete-task/:taskId', async (req, res) => {
