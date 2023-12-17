@@ -1,0 +1,84 @@
+/* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+
+h1 {
+    color: #4a5568;
+    margin-bottom: 20px;
+}
+
+/* Quote styling */
+#quote {
+    margin-bottom: 20px;
+    color: #718096;
+}
+
+/* Login container */
+#login-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+#login-container h3 {
+    color: #2d3748;
+}
+
+/* Form styling */
+#login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#login-form label {
+    margin-bottom: 5px;
+    color: #4a5568;
+}
+
+#login-form input[type="text"],
+#login-form input[type="password"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+}
+
+#login-form input[type="submit"] {
+    background-color: #48bb78;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#login-form input[type="submit"]:hover {
+    background-color: #38a169;
+}
+
+/* Link to Sign Up page */
+#login-container a {
+    display: block;
+    color: #4299e1;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+#login-container a:hover {
+    text-decoration: underline;
+}

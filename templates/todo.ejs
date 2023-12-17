@@ -3,14 +3,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="ServerStaticFiles/js/todo.js" defer></script>
-    <link rel="stylesheet" href="ServerStaticFiles/css/styles.css">
+    <link rel="stylesheet" href="ServerStaticFiles/css/todo.css">
     <title>To-Do List Page</title>
 </head>
 <body>
-    <input type="text" placeholder="Enter New Task" name="enter-task" id="enter-task">
-    <input type="button" value="ADD" name="add-task" id="add-task">
-    <input type="date" name="todoDate" id="todo-date">
-    <div id="task-area"></div>
+    <div class="container">
+        <div class="todo-app">
+            <h2>To-Do List <img src="ServerStaticFiles/images/icon.png"></h2>
+            <div class="row">
+                <input type="text" placeholder="Enter New Task" name="enter-task" id="enter-task">
+                <input type="button" value="ADD" name="add-task" id="add-task">
+            </div>
+            <div id="task-area"></div>
+        </div>
+    </div>
+    
+
+    
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

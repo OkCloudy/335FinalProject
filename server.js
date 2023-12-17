@@ -86,7 +86,7 @@ app.post("/login", async (request, response) => {
     console.log(result);
     console.log(databaseAndCollection.db);
     if (result !== null) {
-        response.render("options");
+        response.render("todo");
         request.session.username = result.username;
     } else {
         response.render("index", {port: portNumber, userNotFound: true });
@@ -102,10 +102,6 @@ app.get("/get-quote", async (request, response) => {
         console.error('Error fetching quote:', error);
         res.status(500).send('Error fetching quote');
     }
-});
-
-app.get("/todo", async (request, response) => {
-    response.render("todo");
 });
 
 app.post("/todo", async (request, response) => {
@@ -128,6 +124,7 @@ app.post("/todo", async (request, response) => {
     }
 });
 
+/* Functionality to delete from DB that i never got to :( 
 app.delete('/delete-task/:taskId', async (req, res) => {
     const taskId = req.params.taskId;
     // Assuming 'username' is stored in the session and each task is tied to a username
@@ -147,4 +144,4 @@ app.delete('/delete-task/:taskId', async (req, res) => {
         console.error('Error deleting task:', error);
         res.status(500).send('Internal Server Error');
     }
-});
+}); */
