@@ -8,7 +8,7 @@
 <body>
     <h1>Sign Up</h1>
     <div id="sign-up-container">
-        <form id="sign-up-form" action="http://localhost:<%= port %>/signUp" method="post">
+        <form id="sign-up-form" action="/signUp" method="post">
             <label for="signUpUsername">Username: </label>
             <input type="text" name="signUpUsername" id="sign-up-username">
 
@@ -26,6 +26,16 @@
             window.onload = function() {
                 // Display an alert or custom notification
                 alert('Password not confirmed');
+                // You can replace the above alert with a custom notification implementation if preferred
+            };
+        </script>
+    <% } %>
+
+    <% if (userNameTaken === true) { %>
+        <script>
+            window.onload = function() {
+                // Display an alert or custom notification
+                alert('Username is taken');
                 // You can replace the above alert with a custom notification implementation if preferred
             };
         </script>

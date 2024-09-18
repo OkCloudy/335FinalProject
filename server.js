@@ -14,13 +14,15 @@ const databaseAndCollection = {db: process.env.MONGO_DB_NAME, collection: proces
 const client = new MongoClient(uri); 
 connectToDB();
 
-/* User session stuff that i did not get to
+const session = require('express-session');
+const store = new session.MemoryStore();
+
 app.use(session({
-    // Session configuration
-    secret: 'your_secret_key',
+    secret: 'some secret',
     resave: false,
-    saveUninitialized: true,
-})); */
+    saveUninitialized: false,
+    store
+}));
 
 /* Initializes request.body with post information */ 
 app.use(bodyParser.urlencoded({extended:false}));
@@ -33,7 +35,6 @@ app.set("view engine", "ejs");
 const publicPath = path.resolve(__dirname, "serverStaticFiles");
 app.use('/serverStaticFiles', express.static(publicPath));
 
-/* Can't remember what this does just stealing it from lecture */
 app.use(express.json());
 
 /* Server and Mongo Connection */
@@ -53,27 +54,40 @@ async function connectToDB() {
 
 /* Endpoint for loading up home page */
 app.get("/", (request, response) => {
-    response.render("index", {port: portNumber, userNotFound: false});
+    response.render("index", {userNotFound: false});
 });
 
 /* Endpoint for loading sign up page */
 app.get("/signUp", (request, response) => {
-    response.render("signUp", {port: portNumber, passwordConfirmed: true});
+    response.render("signUp", {passwordConfirmed: true, userNameTaken: false});
 });
 
 /* Endpoint for post req of user signing up */
 app.post("/signUp", async (request, response) => {
     try {
         let {signUpUsername, signUpPassword, confirmPassword} = request.body;
-        if (signUpPassword !== confirmPassword) {
-            response.render("signUp", {port: portNumber, passwordConfirmed: false});
+
+        // Searching if user is already in database
+        let userInfo = {username: signUpUsername};
+        const takenUser = await client.db(databaseAndCollection.db)
+        .collection(databaseAndCollection.collection)
+        .findOne(userInfo);
+        if (takenUser) {
+            console.log("Username taken")
+            response.render("signUp", {passwordConfirmed: true, userNameTaken: true});
             return;
         }
-        let newUser = {username: signUpUsername, password: signUpPassword};
+        // Checking if password confirmation is correct
+        if (signUpPassword !== confirmPassword) {
+            response.render("signUp", {passwordConfirmed: false, userNameTaken: false});
+            return;
+        }
+
+        let newUser = {username: signUpUsername, password: signUpPassword, tasks: []};
         const result = await client.db(databaseAndCollection.db)
         .collection(databaseAndCollection.collection)
         .insertOne(newUser);
-        response.render("index", {port: portNumber, userNotFound: false});
+        response.redirect("/");
     } catch (error) {
         response.status(500).send(error.message);
     }
@@ -81,20 +95,39 @@ app.post("/signUp", async (request, response) => {
 
 /* Endpoint for user logging in */
 app.post("/login", async (request, response) => {
-    
     let {username, password} = request.body;
     let userInfo = {username, password};
+
+    // Searching user up in database
     const result = await client.db(databaseAndCollection.db)
     .collection(databaseAndCollection.collection)
     .findOne(userInfo);
+
     if (result !== null) {
-        response.render("todo");
+        console.log("logged in")
+        console.log(result);
+        request.session.user = {
+            username: result.username,
+            tasks: result.tasks
+        }
+        console.log(request.session)
+        response.redirect("/todo");
     } else {
-        response.render("index", {port: portNumber, userNotFound: true });
+        response.render("index", {userNotFound: true });
     }
 });
 
-/* Endpoint that gets random quotes from the API */
+app.get("/session-data", (request, response) => {
+    try {
+        console.log("session data get: ",request.session.user.username)
+        response.json(request.session.user)
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send('no more cookies');
+    }
+});
+
+/* Endpoint that gets random quotes from the quotes API */
 app.get("/get-quote", async (request, response) => {
     try {
         const resp = await fetch("https://zenquotes.io/api/random/");
@@ -106,45 +139,32 @@ app.get("/get-quote", async (request, response) => {
     }
 });
 
-/* Endpoint for getting to do lists based on the date that i never finished 
-app.post("/todo", async (request, response) => {
-    if (!request.session.username) {
-        return response.status(401).send('User not logged in');
-    }
+// ToDo endpoints
 
-    const username = request.session.username;
-    const selectedDate = request.body.date;
-    
-    const userTodos = await client.db(databaseAndCollection.db)
-                                  .collection(databaseAndCollection.collection)
-                                  .findOne({ username: username, 'todos.date': selectedDate });
+app.get("/todo", (request, response) => {
+    console.log("stuff", store)
+    response.render("todo");
+});
 
-    if (userTodos) {
-        const todoList = userTodos.todos.find(todo => todo.date === selectedDate);
-        response.send({ todoList: todoList });
-    } else {
-        response.send({ todoList: [] });
-    }
-});*/
-
-/* Functionality to delete from DB that i never got to :( 
-app.delete('/delete-task/:taskId', async (req, res) => {
-    const taskId = req.params.taskId;
-    // Assuming 'username' is stored in the session and each task is tied to a username
-    const username = req.session.username;
-
-    // Delete the task from the database
-    // The actual implementation depends on your database and schema
+app.post("/update-task", async (request,response) => {
     try {
-        await client.db(databaseAndCollection.db)
-                    .collection(databaseAndCollection.collection)
-                    .updateOne(
-                        { username: username },
-                        { $pull: { tasks: { id: taskId } } }  // Assuming each task has an 'id' field
-                    );
-        res.status(200).send('Task deleted');
+        console.log("Updating")
+        //console.log(request.session.user.username)
+        console.log(`Task Text: ${request.body.tasks}`)
+
+        let user = {username: request.session.user.username}
+
+        let update = await client.db(databaseAndCollection.db)
+        .collection(databaseAndCollection.collection)
+        .updateOne(
+            user,
+            { $set: {tasks: request.body.tasks}}
+        );
+
+        request.session.user.tasks = request.body.tasks
     } catch (error) {
-        console.error('Error deleting task:', error);
-        res.status(500).send('Internal Server Error');
+        console.error('Error:', error);
+        response.status(500).send('Error');
     }
-}); */
+    
+});

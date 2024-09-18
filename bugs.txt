@@ -1,0 +1,2 @@
+Tasks not updating accross sesssions with delete
+Tasks not updating with refresh (closing out and then relogging in works for some reason)

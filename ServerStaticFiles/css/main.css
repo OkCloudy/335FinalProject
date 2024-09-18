@@ -1,8 +1,8 @@
 /* General body styles */
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #f3f4f6, #d6e4f0);
-   /* background: linear-gradient(135deg, #b6fbff, #eef9ff); */
+    background: linear-gradient(135deg, #f3f4f6, #d6e4f0); 
+  /*  background: linear-gradient(135deg, #b6fbff, #eef9ff);  */
     margin: 0;
     padding: 20px;
     display: flex;

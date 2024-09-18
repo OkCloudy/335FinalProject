@@ -16,12 +16,12 @@
 
     <div id="login-container">
         <h3>Login</h3>
-        <form id="login-form" action="http://localhost:<%= port %>/login" method="post">
+        <form id="login-form" action="/login" method="post" autocomplete="off">
             <label for="username">Username: </label>
-            <input type="text" name="username">
+            <input type="text" name="username" autocomplete="off">
 
             <label for="password">Password: </label>
-            <input type="password" name="password">
+            <input type="password" name="password" autocomplete="new-password">
             
             <input type="submit" value="Login">
         </form>
@@ -33,7 +33,6 @@
             window.onload = function() {
                 // Display an alert or custom notification
                 alert('User not found. Please try again.');
-                // You can replace the above alert with a custom notification implementation if preferred
             };
         </script>
     <% } %>
