@@ -1,4 +1,4 @@
-Authors: Nathan Nguyen (116648677) Thomas Gacquin (117254945)
+Authors: Nathan Nguyen
 
 Description: 
 Incrementum is a self-improvement web application that allows 
